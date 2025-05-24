@@ -68,7 +68,7 @@ This project exists thanks to all the people who contribute
 ## 🔐 Licensing & Support
 
 Ndako Community Edition is released under the [GNU AGPL v3 License](LICENSE.md).  
-Commercial and SaaS versions are separately licensed — [Learn more](https://ndako.koverae.com).
+Commercial and SaaS versions are separately licensed, [Learn more](https://ndako.koverae.com).
 
 Need help or want to reach out? Email us at ndako@koverae.com.
 
