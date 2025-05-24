@@ -55,8 +55,8 @@ Full setup, usage, and development documentation is available at:
 Ndako thrives on community. Join us, build modules, suggest improvements, or just say hi.
 
 - [Contributing Guide](CONTRIBUTING.md)
-- [Join our discussions](https://github.com/ndakoapp/ndako/discussions)
-- [Feature requests & bugs](https://github.com/ndakoapp/ndako/issues)
+- [Join our discussions](https://github.com/Koverae/ndako-on-premise/discussions)
+- [Feature requests & bugs](https://github.com/Koverae/ndako-on-premise/issues)
 
 This project exists thanks to all the people who contribute
 
@@ -64,6 +64,11 @@ This project exists thanks to all the people who contribute
 -   [Arden BOUET](https://github.com/arden28)
 -   [All Contributors](../../contributors)
 
+
+## 🔐 Licensing
+
+Ndako Community Edition is released under the [GNU AGPL v3 License](LICENSE.md).  
+Commercial and SaaS versions are separately licensed — [Learn more](https://ndako.koverae.com).
 
 ## License & Support
 Ndako is released under the MIT License free and open for everyone.
