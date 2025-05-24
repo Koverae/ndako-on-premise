@@ -23,31 +23,33 @@ Whether you manage a cozy guesthouse, a bustling BnB, or a full-scale hotel, Nda
 - 📊 Dashboards & Reports  
 - 🔗 Modular, API-Ready Architecture  
 - 🌍 Multilingual and Localized  
+- 💱 Multi-Currency Support
 - 🧩 Built on Laravel & Bootstrap
 
---- 
 
-## What Can Ndako Do?
-- Manage reservations and availability with ease
+## 🌍 Why Ndako?
 
-- Handle billing, invoicing, and payments smoothly
+Ndako is more than just software, it’s a **movement** to empower local hospitality businesses with powerful, accessible, and extensible tools.
 
-- Track inventory and supplies in real time
+Whether you're running a lodge in Nairobi, a guesthouse in Goma, or a beach resort in Lamu, Ndako helps you manage and grow.
 
-- Create user roles and permissions to fit your team
-
-- Generate powerful reports to help you make smart decisions
-
-- Work online or offline you decide!
-
-- Speak your language, handle your currency
-
-## Getting Started
+## 📚 Documentation
 Ready to get Ndako up and running?
-We’ve crafted detailed, step-by-step guides just for you, covering everything from installation to advanced features.
+Full setup, usage, and development documentation is available at:
 
-👉🏿 Dive into our documentation here:
-[Ndako User Guide](https://docs.ndako.tech/v1/user-docs/introduction/)
+👉🏿 [Ndako User Guide](https://docs.ndako.tech/v1/user-docs/introduction/)
+
+
+## 🛠️ Built With
+
+| Tech | Description |
+|------|-------------|
+| Laravel | Backend framework |
+| Livewire | Reactive UI components |
+| MySQL | Relational DB |
+| Bootstrap | Responsive styling |
+| Composer/NPM | Dependency management |
+
 
 ## Join Our Community
 Ndako is more than software it’s a community.
