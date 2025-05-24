@@ -1,4 +1,4 @@
-<p align="center"><a href="https://ndako.koverae.com" target="_blank"><img src="https://ndako.koverae.com/assets/images/ndako.png" height="100" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://ndako.koverae.com" target="_blank"><img src="https://ndako.koverae.com/assets/images/ndako.png" height="100" alt="Ndako Logo"></a></p>
 
 <p align="center">
 <a href="https://docs.ndako.tech/v1"><img src="https://img.shields.io/badge/master-docs-875A7B.svg?style=flat&colorA=#017E84" alt="Tech Doc"></a>
@@ -7,7 +7,7 @@
 </p>
 
 
-## About Laravel
+# Ndako
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
