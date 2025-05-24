@@ -1,9 +1,3 @@
-
----
-
-## 3. `LICENSE.md` (AGPLv3 Template + Reference to Premium)
-
-```md
 Ndako Community Edition  
 Copyright (C) 2025 Ndako
 
