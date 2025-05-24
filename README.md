@@ -14,21 +14,17 @@ Welcome to Ndako your all-in-one hotel and hospitality management platform desig
 
 Whether you manage a cozy guesthouse, a bustling BnB, or a full-scale hotel, Ndako brings you powerful tools to handle everything from bookings and billing to inventory and reporting — all wrapped in a beautiful, easy-to-use interface.
 
-### Premium Partners
+## Why Ndako?
+Because managing hospitality should feel seamless, not complicated.
+Ndako is built with real users in mind, crafted to:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- Streamline day-to-day operations
+
+- Empower your team with clear, real-time insights
+
+- Keep your guests happy with flawless booking experiences
+
+- Grow with your business — scale up or customize modules as you need
 
 ## Contributing
 
