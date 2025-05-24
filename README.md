@@ -62,4 +62,4 @@ This project exists thanks to all the people who contribute
 
 ## License & Support
 Ndako is released under the MIT License free and open for everyone.
-Need help or want to reach out? Email us at support@ndako.com.
+Need help or want to reach out? Email us at ndako@koverae.com.
