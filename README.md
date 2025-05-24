@@ -1,11 +1,15 @@
 <p align="center"><a href="https://ndako.koverae.com" target="_blank"><img src="https://ndako.koverae.com/assets/images/ndako.png" height="100" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href="https://github.com/Kovere/ndako-on-premise/actions"><img src="https://github.com/Kovere/ndako-on-premise/workflows/tests/badge.svg" alt="Build Status"></a>
+<a href="https://docs.ndako.tech/v1"><img src="https://img.shields.io/badge/master-docs-875A7B.svg?style=flat&colorA=8F8F8F" alt="Tech Doc"></a>
 <a href="https://packagist.org/packages/Kovere/ndako-on-premise"><img src="https://img.shields.io/packagist/dt/Kovere/ndako-on-premise" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/Kovere/ndako-on-premise"><img src="https://img.shields.io/packagist/v/Kovere/ndako-on-premise" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/Kovere/ndako-on-premise"><img src="https://img.shields.io/packagist/l/Kovere/ndako-on-premise" alt="License"></a>
+[![Tech Doc](https://img.shields.io/badge/master-docs-875A7B.svg?style=flat&colorA=8F8F8F)](https://www.odoo.com/documentation/master)
+[![Help](https://img.shields.io/badge/master-help-875A7B.svg?style=flat&colorA=8F8F8F)](https://www.odoo.com/forum/help-1)
+[![Nightly Builds](https://img.shields.io/badge/master-nightly-875A7B.svg?style=flat&colorA=8F8F8F)](https://nightly.odoo.com/)
 </p>
+
 
 ## About Laravel
 
