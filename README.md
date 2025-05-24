@@ -1,4 +1,4 @@
-<p align="center"><a href="https://ndako.koverae.com" target="_blank"><img src="assets/images/logo/logo-black.png" height="140" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://ndako.koverae.com" target="_blank"><img src="https://ndako.koverae.com/assets/images/ndako.png" height="140" alt="Laravel Logo"></a></p>
 
 <p align="center">
 <a href="https://github.com/Kovere/ndako-on-premise/actions"><img src="https://github.com/Kovere/ndako-on-premise/workflows/tests/badge.svg" alt="Build Status"></a>
