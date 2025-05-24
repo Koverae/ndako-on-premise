@@ -5,8 +5,8 @@
 # Ndako
 
 <p>
-<a href="https://docs.ndako.tech/v1"><img src="https://img.shields.io/badge/master-docs-875A7B.svg?style=flat&colorA=#0E6163" alt="Tech Doc"></a>
-<a href="https://docs.ndako.tech/v1"><img src="https://img.shields.io/badge/master-help-875A7B.svg?style=flat&colorA=#0E6163" alt="Help"></a>
+<a href="https://docs.ndako.tech/v1/user-docs/introduction/"><img src="https://img.shields.io/badge/master-docs-875A7B.svg?style=flat&colorA=#0E6163" alt="Tech Doc"></a>
+<a href="https://docs.ndako.tech/v1/user-docs/introduction/"><img src="https://img.shields.io/badge/master-help-875A7B.svg?style=flat&colorA=#0E6163" alt="Help"></a>
 <a href="https://github.com/Kovere/ndako-on-premise"><img src="https://img.shields.io/badge/master-license-875A7B.svg?style=flat&colorA=#0E6163" alt="License"></a>
 </p>
 
@@ -46,7 +46,7 @@ Ready to get Ndako up and running?
 We’ve crafted detailed, step-by-step guides just for you, covering everything from installation to advanced features.
 
 👉🏿 Dive into our documentation here:
-https://docs.ndako.tech
+[Ndako User Guide](https://docs.ndako.tech/v1/user-docs/introduction/)
 
 ## Join Our Community
 Ndako is more than software it’s a community.
@@ -55,6 +55,7 @@ Whether you want to contribute code, request a feature, or just chat about hospi
 
 This project exists thanks to all the people who contribute
 
+-   [Koverae Technologies](https://github.com/Koverae)
 -   [Arden BOUET](https://github.com/arden28)
 -   [All Contributors](../../contributors)
 
