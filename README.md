@@ -52,9 +52,11 @@ Full setup, usage, and development documentation is available at:
 
 
 ## Join Our Community
-Ndako is more than software it’s a community.
+Ndako thrives on community. Join us, build modules, suggest improvements, or just say hi.
 
-Whether you want to contribute code, request a feature, or just chat about hospitality tech, we’re here. Check out our [[CONTRIBUTING.md](CONTRIBUTING.md)] to get involved or open an issue anytime.
+- [Contributing Guide](CONTRIBUTING.md)
+- [Join our discussions](https://github.com/ndakoapp/ndako/discussions)
+- [Feature requests & bugs](https://github.com/ndakoapp/ndako/issues)
 
 This project exists thanks to all the people who contribute
 
