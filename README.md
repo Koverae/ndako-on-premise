@@ -51,7 +51,7 @@ Full setup, usage, and development documentation is available at:
 | Composer/NPM | Dependency management |
 
 
-## Join Our Community
+## 🌟 Join Our Community
 Ndako thrives on community. Join us, build modules, suggest improvements, or just say hi.
 
 - [Contributing Guide](CONTRIBUTING.md)
@@ -65,11 +65,10 @@ This project exists thanks to all the people who contribute
 -   [All Contributors](../../contributors)
 
 
-## 🔐 Licensing
+## 🔐 Licensing & Support
 
 Ndako Community Edition is released under the [GNU AGPL v3 License](LICENSE.md).  
 Commercial and SaaS versions are separately licensed — [Learn more](https://ndako.koverae.com).
 
-## License & Support
-Ndako is released under the MIT License free and open for everyone.
 Need help or want to reach out? Email us at ndako@koverae.com.
+
