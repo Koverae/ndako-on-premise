@@ -12,7 +12,7 @@
 
 Welcome to Ndako your all-in-one hotel and hospitality management platform designed to make running your business smooth, efficient, and stress-free.
 
-Whether you manage a cozy guesthouse, a bustling BnB, or a full-scale hotel, Ndako brings you powerful tools to handle everything from bookings and billing to inventory and reporting — all wrapped in a beautiful, easy-to-use interface.
+Whether you manage a cozy guesthouse, a bustling BnB, or a full-scale hotel, Ndako brings you powerful tools to handle everything from bookings and billing to inventory and reporting all wrapped in a beautiful, easy-to-use interface.
 
 ## Why Ndako?
 Because managing hospitality should feel seamless, not complicated.
@@ -24,20 +24,41 @@ Ndako is built with real users in mind, crafted to:
 
 - Keep your guests happy with flawless booking experiences
 
-- Grow with your business — scale up or customize modules as you need
+- Grow with your business scale up or customize modules as you need
 
-## Contributing
+## What Can Ndako Do?
+- Manage reservations and availability with ease
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Handle billing, invoicing, and payments smoothly
 
-## Code of Conduct
+- Track inventory and supplies in real time
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Create user roles and permissions to fit your team
 
-## Security Vulnerabilities
+- Generate powerful reports to help you make smart decisions
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Work online or offline you decide!
 
-## License
+- Speak your language, handle your currency
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Getting Started
+Ready to get Ndako up and running?
+We’ve crafted detailed, step-by-step guides just for you, covering everything from installation to advanced features.
+
+👉🏿 Dive into our documentation here:
+https://docs.ndako.tech
+
+## Join Our Community
+Ndako is more than software it’s a community.
+
+Whether you want to contribute code, request a feature, or just chat about hospitality tech, we’re here. Check out our [[CONTRIBUTING.md](CONTRIBUTING.md)] to get involved or open an issue anytime.
+
+This project exists thanks to all the people who contribute
+
+-   [Arden BOUET](https://github.com/arden28)
+-   [All Contributors](../../contributors)
+
+
+## License & Support
+Ndako is released under the MIT License free and open for everyone.
+Need help or want to reach out? Email us at support@ndako.com.
