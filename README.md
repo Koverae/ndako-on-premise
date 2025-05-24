@@ -14,17 +14,18 @@ Welcome to Ndako your all-in-one hotel and hospitality management platform desig
 
 Whether you manage a cozy guesthouse, a bustling BnB, or a full-scale hotel, Ndako brings you powerful tools to handle everything from bookings and billing to inventory and reporting all wrapped in a beautiful, easy-to-use interface.
 
-## Why Ndako?
-Because managing hospitality should feel seamless, not complicated.
-Ndako is built with real users in mind, crafted to:
+## 🚀 Features
 
-- Streamline day-to-day operations
+- 🛏️ Room & Reservation Management  
+- 👥 Staff & Shift Scheduling  
+- 💰 Invoicing, Payments & Accounting  
+- 📦 Inventory & Procurement  
+- 📊 Dashboards & Reports  
+- 🔗 Modular, API-Ready Architecture  
+- 🌍 Multilingual and Localized  
+- 🧩 Built on Laravel & Bootstrap
 
-- Empower your team with clear, real-time insights
-
-- Keep your guests happy with flawless booking experiences
-
-- Grow with your business scale up or customize modules as you need
+--- 
 
 ## What Can Ndako Do?
 - Manage reservations and availability with ease
