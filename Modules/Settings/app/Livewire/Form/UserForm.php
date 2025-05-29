@@ -3,6 +3,7 @@
 namespace Modules\Settings\Livewire\Form;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\On;
 use Modules\App\Livewire\Components\Form\Button\ActionBarButton;
@@ -18,60 +19,48 @@ class UserForm extends SimpleAvatarForm
 {
     use ActionBarButtonTrait;
     public $user;
-    public $name, $email, $phone, $language, $timezone;
-    public array $dashboardOptions = [], $adminOptions = [], $propertyOptions = [], $frontOptions = [], $employeeOptions = [], $languageOptions = [], $timezoneOptions = [];
+    public $name, $email, $phone, $role, $language, $timezone;
+    public array $rolesOptions = [], $languageOptions = [], $timezoneOptions = [];
 
     // Define validation rules
     protected $rules = [
         'name' => 'required|string|max:30',
-        'phone' => 'nullable|string', 
-        'email' => 'nullable|email',
+        'phone' => 'nullable|string',
+        'email' => 'required|email',
+        'role' => 'required|string',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         'language' => 'nullable|integer|exists:languages,id',
-        'timezone' => 'nullable|string', 
+        'timezone' => 'nullable|string',
     ];
 
     public function mount($user = null){
+        $this->status = 'never-connected';
         if($user){
             $this->name = $user->name;
             $this->email = $user->email;
             $this->phone = $user->phone;
+            $this->role = $user->role;
             $this->image_path = $user->avatar;
             $this->language = $user->language_id;
             $this->timezone = $user->timezone;
             $this->status = $user->last_login_at ? 'confirmed' : 'never-connected';
         }
-        $dashboard = [
-            ['id' => 'admin', 'label' => 'Admin'],
+
+        $roles = [
+            ['id' => 'owner', 'label' => __('Owner')],
+            ['id' => 'manager', 'label' => __('Hotel/General Manager')],
+            ['id' => 'front-desk', 'label' => __('Front Desk / Receptionist')],
+            ['id' => 'maintenance-staff', 'label' => __('Maintenance Staff')],
+            ['id' => 'accountant', 'label' => __('Accountant')],
         ];
-        $this->dashboardOptions = toSelectOptions($dashboard, 'id', 'label');
+        $this->rolesOptions = toSelectOptions($roles, 'id', 'label');
 
         $admin = [
             ['id' => 'settings', 'label' => 'Settings'],
             ['id' => 'access-right', 'label' => 'Access Rights'],
         ];
-        $this->adminOptions = toSelectOptions($admin, 'id', 'label');
 
-        $property = [
-            ['id' => 'user', 'label' => 'User'],
-            ['id' => 'admin', 'label' => 'Admin'],
-        ];
-        $this->propertyOptions = toSelectOptions($property, 'id', 'label');
-
-        $front = [
-            ['id' => 'receptionist', 'label' => 'Receptionist'],
-            ['id' => 'manager', 'label' => 'Manager'],
-            ['id' => 'admin', 'label' => 'Admin'],
-        ];
-        $this->frontOptions = toSelectOptions($front, 'id', 'label');
-
-        $employee = [
-            ['id' => 'officer', 'label' => 'Officer: Manage all employees'],
-            ['id' => 'admin', 'label' => 'Admin'],
-        ];
-        $this->employeeOptions = toSelectOptions($employee, 'id', 'label');
-
-        $this->languageOptions = toSelectOptions(Language::isCompany(current_company()->id)->get(), 'id', 'name');
+        $this->languageOptions = toSelectOptions(Language::all(), 'id', 'name');
         $timezones = [
             ['id' => 'utc', 'label' => 'UTC (Coordinated Universal Time)'],
             ['id' => 'gst', 'label' => 'Greenwich Standard Time (GST) - United Kingdom'],
@@ -175,11 +164,7 @@ class UserForm extends SimpleAvatarForm
     public function groups() : array
     {
         return [
-            Group::make('productivity',__("Productivity"), 'general'),
-            Group::make('administration',__("Administration"), 'general'),
-            Group::make('human-resource',__("Human Resources"), 'general'),
-            Group::make('inventory',__("Inventory"), 'general'),
-            Group::make('sales',__("Sales"), 'general'),
+            Group::make('roles',__("Role & Access"), 'general'),
             Group::make('localization',__("Localization"), 'preferences'),
         ];
     }
@@ -190,15 +175,12 @@ class UserForm extends SimpleAvatarForm
             Input::make('name', "Name", 'text', 'name', 'top-title', 'none', 'none', __('e.g. Arden BOUET'))->component('app::form.input.ke-title'),
             Input::make('email', "Email", 'email', 'email', 'top-title', 'none', 'none', __('e.g. email@yourcompany.com'))->component('app::form.input.ke-title-2'),
             Input::make('phone', "Phone", 'tel', 'phone', 'top-title', 'none', 'none', __('e.g. +254745908026'))->component('app::form.input.ke-title-2'),
-            Input::make('dashboard', 'Dashboard', 'select', 'email', 'top-title', 'general', 'productivity', "", "", $this->dashboardOptions),
-            Input::make('administration', 'Administration', 'select', 'email', 'right', 'general', 'administration', "", "", $this->adminOptions),
-            Input::make('employess', 'Employees', 'select', 'email', 'top-title', 'general', 'human-resource', "", "", $this->employeeOptions),
-            Input::make('property', 'Property', 'select', 'email', 'top-title', 'general', 'inventory', "", "", $this->propertyOptions),
-            Input::make('front-office', 'Front Office', 'select', 'email', 'top-title', 'general', 'sales', "", "", $this->frontOptions),
+
+            Input::make('role', 'Role', 'select', 'role', 'top-title', 'general', 'roles', "", "", $this->rolesOptions),
             // Preferences
             Input::make('language', 'Language', 'select', 'language', 'none', 'preferences', 'localization', "", "", $this->languageOptions),
             Input::make('timezone', 'Timezone', 'select', 'timezone', 'nope', 'preferences', 'localization', "", "", $this->timezoneOptions),
-            
+
         ];
     }
     // Action Bar Button
@@ -234,37 +216,42 @@ class UserForm extends SimpleAvatarForm
         $this->validate();
         if($this->user){
             $user = User::find($this->user->id);
-    
+
             if(!$this->image_path){
                 $this->image_path = $user->id . '_avatar.png';
-    
+
                 // $this->photo->storeAs('avatars', $this->image_path, 'public');
                 $user->update([
                     'avatar' => $this->image_path,
                 ]);
             }
-    
+
             $this->photo->storeAs('avatars', $this->image_path, 'public');
-    
-    
+
+
             // Send success message
             session()->flash('message', 'Avatar updated successfully!');
         }
     }
-    
+
     #[On('create-user')]
     public function createUser(){
-        
+
+        $this->validate();
+
         $user = User::create([
+            'company_id' => current_company()->id,
+            'current_company_id' => current_company()->id,
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
+            'password' => Hash::make("ndako"),
             'language_id' => $this->language,
             'timezone' => $this->timezone,
-            'status' => $this->status,
+            'status' => $this->status ?? 'never-connected',
         ]);
         $user->save();
-        
+
         $avatar = $user->id.'_avatar.png';
         if($this->photo){
             $this->photo->storeAs('avatars', $avatar, 'public');
@@ -273,13 +260,15 @@ class UserForm extends SimpleAvatarForm
             'avatar' => $avatar,
         ]);
 
+        $user->assignRole($this->role);
+
         return $this->redirect(route('settings.users.show', ['user' => $user->id]), navigate: true);
     }
-    
+
     #[On('update-user')]
     public function updateUser(){
         $user = User::find($this->user->id);
-        
+
         $this->validate();
         if(!$this->image_path){
             $this->image_path = $user->id . '_avatar.png';
@@ -287,7 +276,7 @@ class UserForm extends SimpleAvatarForm
         if($this->photo){
             $this->photo->storeAs('avatars', $this->image_path, 'public');
         }
-        
+
         $user->update([
             'name' => $this->name,
             'email' => $this->email,
