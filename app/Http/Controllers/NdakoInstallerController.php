@@ -1492,7 +1492,7 @@ class NdakoInstallerController extends Controller
             'APP_ENV'          => $request->app_environment ?? 'local',
             'APP_URL'          => $request->app_url ?? 'http://localhost',
             'APP_TIMEZONE'     => $request->app_timezone ?? 'UTC',
-            'APP_CURRENCY'     => $request->app_currency ?? 'USD',
+            'APP_INSTALLED'     => true,
             'NDAKO_APP_KEY'    => $request->api_key ?? '',
 
             // Mail Setup
