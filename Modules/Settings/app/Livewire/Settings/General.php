@@ -115,9 +115,6 @@ class General extends AppSetting
             // Box::make('email-template', __('E-mail templates'), 'companny', __("Customize the look and feel of automated emails"), 'companies', false, null, " bi-envelope"),
             Box::make('main-currency', "Main Currency", 'default_currency', "Main currency of your company", 'companies', false, "", null),
             Box::make('languages', __('1 Language(s)'), 'invitation', null, 'companies', false, "https://www.docs.ndako.tech/user-guide", " bi-translate"),
-            // Permissions
-            // Box::make('customer-portal', __('Guests Portal'), 'has_customer_account', __('Let your guests log in to access their booking details and invoices.'), 'permissions', false),
-            // Box::make('default-access', __('Default Access Rights'), 'has_default_access_right', __('Define custom access rights for new team members.'), 'permissions', true),
             Box::make('password-reset', __('Password Reset'), 'has_reset_password', __('Enable password reset from Login page'), 'permissions', true),
             Box::make('import-export', __('Import / Export'), 'has_import_from_xls', __('Allow users to import data from CSV/XLS/XLSX files'), 'permissions', true, "https://www.docs.ndako.tech/user-guide"),
             // Integrations
