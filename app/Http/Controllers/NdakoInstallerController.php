@@ -1563,23 +1563,6 @@ class NdakoInstallerController extends Controller
             ]);
             $team->save();
 
-            $plan = Plan::getByTag("spark-yearly");
-
-            $subscription = $team->newSubscription(
-                'main', // identifier tag of the subscription. If your application offers a single subscription, you might call this 'main' or 'primary'
-                $plan, // Plan or PlanCombination instance your subscriber is subscribing to
-                'Main subscription', // Human-readable name for your subscription
-                'Customer main subscription', // Description
-                null, // Start date for the subscription, defaults to now()
-                'free' // Payment method service defined in config
-            );
-
-            $subscription->update([
-                'trial_ends_at' => null,
-                'starts_at' => now(),
-                'ends_at' => Carbon::parse(now())->addYears(1),
-            ]);
-
             $countryId = Country::where('country_code', $request->company_country)->first()->id;
             $currencyId = Currency::where('code', $request->company_currency)->first()->id;
 
@@ -1587,11 +1570,9 @@ class NdakoInstallerController extends Controller
                 'team_id' => $team->id,
                 'owner_id' => $user->id,
                 'name' => $request->company_name,
-                // 'website' => $request->website,
                 'city' => $request->company_city,
                 'country_id' => $countryId,
                 'industry' => $request->type,
-                // 'size' => $request->rooms,
                 'primary_interest' => 'manage_my_business',
                 'default_currency_id' => $currencyId,
             ]);
@@ -1614,26 +1595,4 @@ class NdakoInstallerController extends Controller
             $user->givePermissionTo('manage_kover_subscription');
     }
 
-    public function getplan(){
-
-        $plan = 'spark';
-
-        // Check if the billing cycle is passed in the URL, else let the user choose
-        $billingCycle = request()->query('billing_cycle', 'yearly');
-
-
-        // Ensure billing cycle is valid
-        if (!in_array($billingCycle, ['monthly', 'yearly'])) {
-            $billingCycle = null; // Force user to select if not provided
-        }
-
-        if($plan !== 'starter'){
-            $tag = $plan.'-'.$billingCycle;
-            $plan = Plan::getByTag($tag);
-        }else{
-            $plan = Plan::getByTag('starter');
-        }
-
-        return $plan;
-    }
 }

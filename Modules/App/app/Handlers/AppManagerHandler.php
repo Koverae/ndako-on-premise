@@ -28,9 +28,7 @@ class AppManagerHandler extends AppHandler
 
     protected function handleInstallation($company)
     {
-        // Example: Create app-manager related data and initial configuration
-        // $this->createWallet($company);
-        // $this->installUnitsOfMeasure($company);
+        // 
     }
 
     protected function handleUninstallation()
@@ -99,16 +97,7 @@ class AppManagerHandler extends AppHandler
      * @param int $companyId
      */
     private function createCountries(){
-
-        // $response = Http::timeout(30)->withoutVerifying()->retry(3, 100)
-        // ->get('https://restcountries.com/v3.1/all?fields=name,flags,cca2,currencies,startOfWeek,maps,idd,capital,region,subregion,languages');
-
-        // if (!$response->successful()) {
-        //     Log::error('Failed to fetch countries: ' . $response->body());
-        //     return;
-        // }
-
-
+        
         $countries =  [
             [
                 'name' => 'Afghanistan',
