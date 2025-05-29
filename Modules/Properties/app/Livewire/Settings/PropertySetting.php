@@ -106,12 +106,9 @@ class PropertySetting extends AppSetting
     public function blocks() : array
     {
         return [
-            // Block::make('general-settings', __('General Property Settings')),
-            // Block::make('accommodations', _('Accommodations & Features')),
             Block::make('pricing', __('Pricing & Discounts')),
             Block::make('booking-settings', 'Booking Settings'),
             Block::make('housekeeping', 'Housekeeping & Maintenance'),
-            Block::make('guest-experience', 'Resident and Guest Experience'),
             // Add more buttons as needed
         ];
     }
@@ -136,10 +133,6 @@ class PropertySetting extends AppSetting
             Box::make('maintenance-alert', "Maintenance Alerts", 'has_maintenance_alerts', "Notify staff of required repairs or inspections.", 'housekeeping', true, "", null),
             // Box::make('housekeeping-staff', "Housekeeping Staff Assignments", 'has_housekeeping_staff', "Allocate cleaning tasks to specific employees.", 'housekeeping', true, "", null),
             Box::make('maintenance-request', "Maintenance Requests", 'has_maintenance_requests', "Allow tenants to submit repair tickets directly.", 'housekeeping', true, "", null),
-            // Resident and Guest Experience
-            Box::make('customer-portal', "Guest Portal", 'has_customer_portal', "Provide a platform for guests to view booking details, pay, and report issues.", 'guest-experience', true, "", null),
-            // Box::make('in-room-services', "In-Room Services", 'has_in_room_services', "Enable ordering of room service or add-ons through a guest portal.", 'guest-experience', true, "", null),
-            Box::make('guest-notes', "Guest Notes", 'has_guest_note', "Record specific guest preferences or past feedback for repeat stays.", 'guest-experience', true, "", null),
         ];
     }
 

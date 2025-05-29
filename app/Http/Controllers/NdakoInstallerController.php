@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Koverae\KoveraeBilling\Models\Plan;
 use Modules\App\Handlers\AppManagerHandler;
@@ -1513,8 +1514,47 @@ class NdakoInstallerController extends Controller
         file_put_contents($envPath, $env);
     }
 
-    public function checkNdakoAppKey($NdakoKey){
-        return true;
+    public function checkNdakoAppKey($ndakoKey){
+        // Validate the APP key format
+        if (empty($ndakoKey) || !is_string($ndakoKey)) {
+            Log::warning('Invalid APP key format: ' . $ndakoKey);
+            return [
+                'status' => 'error',
+                'message' => 'APP key must be a non-empty string',
+                'status_code' => 400,
+            ];
+        }
+
+        // Make HTTP request to the API
+        try {
+            $response = Http::post(config('app.api_url', 'http://localhost:8000') . '/api/check-ndako-app', [
+                'app_key' => $ndakoKey,
+            ]);
+
+            if ($response->successful()) {
+                Log::info('APP key verification successful: ' . $ndakoKey);
+                return [
+                    'status' => 'success',
+                    'message' => 'Ndako App Key exists and is active',
+                    'data' => $response->json()['data'],
+                    'status_code' => 200,
+                ];
+            }
+
+            Log::warning('APP key verification failed: ' . $ndakoKey . ' - ' . $response->body());
+            return [
+                'status' => 'error',
+                'message' => $response->json()['message'] ?? 'Failed to verify APP key',
+                'status_code' => $response->status(),
+            ];
+        } catch (Exception $e) {
+            Log::error('Error verifying APP key: ' . $e->getMessage());
+            return [
+                'status' => 'error',
+                'message' => 'An error occurred while verifying the APP key: ' . $e->getMessage(),
+                'status_code' => 500,
+            ];
+        }
     }
 
     public function createCompany(Request $request, $user){

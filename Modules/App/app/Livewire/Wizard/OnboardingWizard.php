@@ -28,7 +28,7 @@ class OnboardingWizard extends SimpleWizard
 {
     use WithFileUploads;
 
-    public $company, $document_type, $document, $selfie, $documentPreview, $selfiePreview, $photo, $image_path, $default_img;
+    public $company, $photo, $image_path, $default_img;
 
     public $type, $invoicing = 'rate', $name, $country, $street, $city, $state, $zip, $description, $floors = 0, $companyEmail, $companyPhone, $companyStreet, $companyCity, $companyState, $companyZip, $companyCountry;
 
@@ -137,60 +137,25 @@ class OnboardingWizard extends SimpleWizard
 
     public function steps(){
         return [
-            Step::make(0, 'Identity Verification 🔒', true),
-            Step::make(1, 'Add First Property 🏡', false),
-            Step::make(2, 'Define Your Units 🏢', false),
-            Step::make(3, 'Invite Team Members 👥', false),
-            Step::make(4, 'Personalization (Logo, Currency, Timezone) 🎨', false),
-            Step::make(5, 'Final Step - Dashboard Tour 🚀', false),
+            // Step::make(0, 'Identity Verification 🔒', true),
+            Step::make(0, 'Add First Property 🏡', false),
+            Step::make(1, 'Define Your Units 🏢', false),
+            Step::make(2, 'Invite Team Members 👥', false),
+            Step::make(3, 'Personalization (Logo, Currency, Timezone) 🎨', false),
+            Step::make(4, 'Final Step - Dashboard Tour 🚀', false),
         ];
     }
 
     public function stepPages(){
         return [
-            StepPage::make('Identity Verification 🔒', '', 0)->component('app::wizard.step-page.special.onboarding.identity'),
-            StepPage::make('Add First Property 🏡', '', 1)->component('app::wizard.step-page.special.onboarding.add-property'),
-            StepPage::make('Define Your Units 🏢', '', 2)->component('app::wizard.step-page.special.onboarding.add-units'),
-            StepPage::make('Invite Team Members 👥', '', 3)->component('app::wizard.step-page.special.onboarding.invite-members'),
-            StepPage::make('Personalization (Logo, Currency, Timezone) 🎨 👥', '', 4)->component('app::wizard.step-page.special.onboarding.personalization'),
-            StepPage::make('final', '', 5)->component('app::wizard.step-page.special.onboarding.final'),
+            // StepPage::make('Identity Verification 🔒', '', 0)->component('app::wizard.step-page.special.onboarding.identity'),
+            StepPage::make('Add First Property 🏡', '', 0)->component('app::wizard.step-page.special.onboarding.add-property'),
+            StepPage::make('Define Your Units 🏢', '', 1)->component('app::wizard.step-page.special.onboarding.add-units'),
+            StepPage::make('Invite Team Members 👥', '', 2)->component('app::wizard.step-page.special.onboarding.invite-members'),
+            StepPage::make('Personalization (Logo, Currency, Timezone) 🎨 👥', '', 3)->component('app::wizard.step-page.special.onboarding.personalization'),
+            StepPage::make('final', '', 4)->component('app::wizard.step-page.special.onboarding.final'),
             // StepPage::make('confirmation', '', 6),
         ];
-    }
-
-    // Verify Identity
-
-    public function updatedSelfie()
-    {
-        $this->validateOnly('selfie');
-        $this->selfiePreview = $this->selfie->temporaryUrl();
-    }
-
-    public function submitIdentity()
-    {
-        $this->validate([
-            'document_type' => 'required|string|in:id-card,passport,driver-license',
-            'document' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
-            'selfie' => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        if(Auth::user()->identity == 'pending'){
-            return $this->goToNextStep();
-        }
-
-        $documentPath = $this->document->store('identity_documents', 'public');
-        $selfiePath = $this->selfie ? $this->selfie->store('identity_selfies', 'public') : null;
-
-        IdentityVerification::create([
-            'user_id' => Auth::user()->id,
-            'document_type' => $this->document_type,
-            'document_path' => $documentPath,
-            'selfie_path' => $selfiePath,
-            'status' => 'pending',
-        ]);
-
-        session()->flash('success', 'Identity verification submitted successfully.');
-        $this->goToNextStep();
     }
 
     // Add the unit to the propertyUnits array
