@@ -2,7 +2,11 @@
 
 namespace Modules\RevenueManager\Livewire\Modal;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use LivewireUI\Modal\ModalComponent;
+use Modules\App\Events\NotificationEvent;
+use Modules\App\Models\Notification\Notification;
 use Modules\Properties\Models\Property\PropertyUnit;
 use Modules\RevenueManager\Models\Expenses\Expense;
 use Modules\RevenueManager\Models\Expenses\ExpenseCategory;
@@ -24,7 +28,9 @@ class AddExpenseModal extends ModalComponent
         'amount' => 'required|max:100',
     ];
     public function mount($expense = null){
-        $this->property = current_property()->id;
+        $this->property = current_property()->id ?? null;
+        $this->date = Carbon::today()->format('Y-m-d');
+
         if($expense){
             $this->reference = $expense->reference;
             $this->title = $expense->title;
@@ -34,7 +40,7 @@ class AddExpenseModal extends ModalComponent
             $this->note = $expense->note;
         }
 
-        $this->unitOptions = PropertyUnit::isCompany(current_company()->id)->isProperty($this->property)->get();
+        $this->unitOptions = PropertyUnit::isCompany(current_company()->id)->isProperty($this->property)->get() ;
         $this->categoryOptions = ExpenseCategory::isCompany(current_company()->id)->get();
     }
 
@@ -53,7 +59,22 @@ class AddExpenseModal extends ModalComponent
         ]);
         $expense->save();
 
+        // Send Notification
+        $notification = Notification::create([
+            'user_id' => Auth::user()->id,
+            'company_id' => $expense->company_id,
+            'type' => 'expense.created',
+            'data' => [
+                'message' => "A new expense of ". format_currency($expense->amount). " has been made by {$expense->agent->name}.",
+                'expense_id' => $expense->id,
+            ],
+        ]);
+
+        event(new NotificationEvent($notification));
+
         $this->dispatch('closeModal');
+
+        $this->redirect(route("expenses.lists"), true);
 
     }
 
