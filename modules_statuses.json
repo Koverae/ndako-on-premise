@@ -3,6 +3,5 @@
     "App": true,
     "Properties": true,
     "ChannelManager": true,
-    "RevenueManager": true,
-    "Contact": true
+    "RevenueManager": true
 }

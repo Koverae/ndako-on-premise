@@ -474,21 +474,6 @@ if(!function_exists('lease_term')){
 //     }
 // }
 
-if(!function_exists('hasFeature')){
-    function hasFeature(Team $team, string $feature): bool
-    {
-        $plan = $team->subscription('main');
-        if (!$plan) {
-            return false; // No plan assigned
-        }
-
-        $features = $plan->features()->pluck('value', 'tag')->toArray();
-
-        // Ensure the feature exists and is explicitly true
-        return array_key_exists($feature, $features) && $features[$feature] == true;
-    }
-}
-
 if(!function_exists('getRemainingTrialDays')){
     function getRemainingTrialDays(){
         $remainingTime = '';

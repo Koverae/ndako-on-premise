@@ -25,13 +25,9 @@ Route::middleware('identify-kover')->group(function () {
 
     Route::get('/import/{model}', ImportFile::class)->name('import.records');
 
-    Route::get('/subcribe', SubscriptionPage::class)->name('subscribe');
-
     // Paystack Payment
     Route::post('/paystack/pay', [PaystackController::class, 'initiate'])->name('paystack.pay');
     Route::get('/paystack/callback', [PaystackController::class, 'callback'])->name('paystack.callback');
-    // Route::get('/paystack/callback', function (Request $request) {
-    // })->name('paystack.callback');
 
     // Koverae Billing
     Route::get('/koverae-billing/paystack/callback', [PaymentsPaystackController::class, 'callback'])->name('billing.paystack.callback');

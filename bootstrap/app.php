@@ -27,9 +27,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         //
         $middleware->append([
-            // AppendSubdomain::class,
             \App\Http\Middleware\EnsureOnboardingCompleted::class,
-            // \Illuminate\Http\Middleware\HandleCors::class
             CorsMiddleware::class,
             \App\Http\Middleware\CheckIfInstalled::class,
         ]);
@@ -40,8 +38,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'valid.invitation' => \App\Http\Middleware\ValidInvitationToken::class,
-            'checkApiKey' => \App\Http\Middleware\AuthenticateApiKey::class,
-            'check-allowed-domains' => \App\Http\Middleware\CheckAllowedDomains::class,
             'identify-kover' => \App\Http\Middleware\IdentifyKover::class,
         ]);
         
