@@ -262,14 +262,6 @@ if (isset($__slots)) unset($__slots);
     </div>
     <?php endif; ?>
 
-    <?php if(current_company()->team->subscription('main')->isOnTrial()): ?>
-    <div class="setting_block">
-        <div class="mt-2 alert alert-warning">
-            <p>⏳ Your trial will expire in <b><?php echo e(getRemainingTrialDays()); ?></b>! <a href="<?php echo e(route('subscribe')); ?>" class=""><strong>Upgrade now</strong></a> to continue managing your properties effortlessly with Ndako’s full suite of tools</p>
-        </div>
-    </div>
-    <?php endif; ?>
-
     <!-- Controls Panel -->
     <?php echo $__env->yieldContent('control-panel'); ?>
     <!-- Controls Panel -->

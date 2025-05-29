@@ -43,16 +43,10 @@ return Application::configure(basePath: dirname(__DIR__))
             'checkApiKey' => \App\Http\Middleware\AuthenticateApiKey::class,
             'check-allowed-domains' => \App\Http\Middleware\CheckAllowedDomains::class,
             'identify-kover' => \App\Http\Middleware\IdentifyKover::class,
-            'subscribed' => \App\Http\Middleware\EnsureTeamHasSubscription::class,
         ]);
-
-        // $middleware->redirectGuestsTo('/login');
+        
         // Using a closure...
         $middleware->redirectGuestsTo(fn (Request $request) => route('login'));
-
-        // $middleware->validateCsrfTokens(except: [
-        //     'api/check-availability', // Add your route here
-        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

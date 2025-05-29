@@ -17,7 +17,7 @@ Route::get('/', function () {
     return redirect('/web');
 });
 
-Route::middleware(['auth', 'verified', 'identify-kover', 'subscribed', 'twofactor'])->prefix('web')->group(function () {
+Route::middleware(['auth', 'verified', 'identify-kover', 'twofactor'])->prefix('web')->group(function () {
 
     Route::get('/onboarding', Onboarding::class)->name('onboarding');
     Route::get('/', Overview::class)->name('dashboard');
