@@ -1397,6 +1397,16 @@ class NdakoInstallerController extends Controller
             'app_timezone' => 'nullable|string',
             'app_currency' => 'nullable|string',
 
+            // EMAIL SETUP
+            'mail_mailer' => 'nullable|string|in:smtp,sendmail,mailgun,ses,postmark',
+            'mail_host' => 'nullable|string',
+            'mail_port' => 'nullable|string',
+            'mail_username' => 'nullable|string',
+            'mail_password' => 'nullable|string',
+            'mail_encryption' => 'nullable|string|in:tls,ssl,null',
+            'mail_from_address' => 'nullable|string',
+            'mail_from_name' => 'nullable|string',
+
             // Admin validation
             'admin_name' => 'required|string|max:255',
             'admin_email' => 'required|email|max:255',
@@ -1404,7 +1414,7 @@ class NdakoInstallerController extends Controller
             'admin_password' => 'nullable|string|min:8',
 
             // Company validation
-            'api_key' => 'required|string|max:255',
+            'api_key' => 'nullable|string|max:255',
             'company_name' => 'required|string|max:255',
             'company_type' => 'required|string',
             'company_phone' => 'nullable|string',
@@ -1417,15 +1427,7 @@ class NdakoInstallerController extends Controller
         ]);
 
             // Step 1: Check the Ndako App Key
-            $appKey = $this->checkNdakoAppKey($request->api_key);
-            if(!$appKey){
 
-                session()->flash('error', "Your Ndako App Key is not valid!");
-                Log::info("Your Ndako App Key is not valid!");
-                return redirect()->back()
-                    ->withInput($request->except('admin_password'))
-                    ->withErrors(['error' => 'Your Ndako App Key is not valid!']);
-            }
 
             // Step 2: Write .env file with DB and app settings
             $this->writeEnvFile($request);
@@ -1475,86 +1477,56 @@ class NdakoInstallerController extends Controller
         // }
     }
 
-
-
     protected function writeEnvFile(Request $request)
     {
         $envPath = base_path('.env');
         $env = file_get_contents($envPath);
 
-        $dbConnection = $request->db_connection ?? 'mysql';
-        $dbHost = $request->db_host ?? '';
-        $dbDatabase = $request->db_database;
-        $dbUsername = $request->db_username ?? '';
-        $dbPassword = $request->db_password ?? '';
-        $appEnv = $request->app_environment ?? 'local';
-        $appUrl = $request->app_url ?? 'http://localhost';
-        $appTimezone = $request->app_timezone ?? 'UTC';
-        $appCurrency = $request->app_currency;
+        $values = [
+            'DB_CONNECTION'    => $request->db_connection ?? 'mysql',
+            'DB_HOST'          => $request->db_host ?? '',
+            'DB_PORT'          => $request->db_connection === 'mysql' ? '3306' : ($request->db_connection === 'pgsql' ? '5432' : ''),
+            'DB_DATABASE'      => $request->db_database ?? '',
+            'DB_USERNAME'      => $request->db_username ?? '',
+            'DB_PASSWORD'      => $request->db_password ?? '',
+            'APP_ENV'          => $request->app_environment ?? 'local',
+            'APP_URL'          => $request->app_url ?? 'http://localhost',
+            'APP_TIMEZONE'     => $request->app_timezone ?? 'UTC',
+            'APP_CURRENCY'     => $request->app_currency ?? 'USD',
+            'NDAKO_APP_KEY'    => $request->api_key ?? '',
 
-        $appKey = $request->api_key;
+            // Mail Setup
+            'MAIL_MAILER'      => $request->mail_mailer ?? 'smtp',
+            'MAIL_HOST'        => $request->mail_host ?? '',
+            'MAIL_PORT'        => $request->mail_port ?? '587',
+            'MAIL_USERNAME'    => $request->mail_username ?? '',
+            'MAIL_PASSWORD'    => $request->mail_password ?? '',
+            'MAIL_ENCRYPTION'  => $request->mail_encryption ?? 'tls',
+            'MAIL_FROM_ADDRESS'=> $request->mail_from_address ?? '',
+            'MAIL_FROM_NAME'   => $request->mail_from_name ?? ''
+        ];
 
-        // Update or add environment variables
-        $env = preg_replace('/DB_CONNECTION=.*/', "DB_CONNECTION={$dbConnection}", $env);
-        $env = preg_replace('/DB_HOST=.*/', "DB_HOST={$dbHost}", $env);
-        $env = preg_replace('/DB_PORT=.*/', $dbConnection === 'mysql' ? "DB_PORT=3306" : ($dbConnection === 'pgsql' ? "DB_PORT=5432" : ""), $env);
-        $env = preg_replace('/DB_DATABASE=.*/', "DB_DATABASE={$dbDatabase}", $env);
-        $env = preg_replace('/DB_USERNAME=.*/', "DB_USERNAME={$dbUsername}", $env);
-        if($dbPassword){
-        $env = preg_replace('/DB_PASSWORD=.*/', "DB_PASSWORD=\"{$dbPassword}\"", $env);
+        foreach ($values as $key => $value) {
+            $env = $this->setEnvValue($env, $key, $value);
         }
-
-        $env = preg_replace('/APP_ENV=.*/', "APP_ENV={$appEnv}", $env);
-        $env = preg_replace('/APP_URL=.*/', "APP_URL={$appUrl}", $env);
-        $env = preg_replace('/APP_TIMEZONE=.*/', "APP_TIMEZONE={$appTimezone}", $env);
-        $env = preg_replace('/APP_CURRENCY=.*/', "APP_CURRENCY={$appCurrency}", $env);
-
-        $env = preg_replace('/NDAKO_APP_KEY=.*/', "NDAKO_APP_KEY={$appKey}", $env);
 
         file_put_contents($envPath, $env);
     }
 
+    protected function setEnvValue(string $env, string $key, string $value): string
+    {
+        $escaped = preg_quote($key, '/');
+        $pattern = "/^{$escaped}=.*$/m";
+
+        if (preg_match($pattern, $env)) {
+            return preg_replace($pattern, "{$key}=\"{$value}\"", $env);
+        }
+
+        return rtrim($env, "\n") . PHP_EOL . "{$key}=\"{$value}\"" . PHP_EOL;
+    }
+
     public function checkNdakoAppKey($ndakoKey){
-        // Validate the APP key format
-        if (empty($ndakoKey) || !is_string($ndakoKey)) {
-            Log::warning('Invalid APP key format: ' . $ndakoKey);
-            return [
-                'status' => 'error',
-                'message' => 'APP key must be a non-empty string',
-                'status_code' => 400,
-            ];
-        }
-
-        // Make HTTP request to the API
-        try {
-            $response = Http::post(config('app.api_url', 'http://localhost:8000') . '/api/check-ndako-app', [
-                'app_key' => $ndakoKey,
-            ]);
-
-            if ($response->successful()) {
-                Log::info('APP key verification successful: ' . $ndakoKey);
-                return [
-                    'status' => 'success',
-                    'message' => 'Ndako App Key exists and is active',
-                    'data' => $response->json()['data'],
-                    'status_code' => 200,
-                ];
-            }
-
-            Log::warning('APP key verification failed: ' . $ndakoKey . ' - ' . $response->body());
-            return [
-                'status' => 'error',
-                'message' => $response->json()['message'] ?? 'Failed to verify APP key',
-                'status_code' => $response->status(),
-            ];
-        } catch (Exception $e) {
-            Log::error('Error verifying APP key: ' . $e->getMessage());
-            return [
-                'status' => 'error',
-                'message' => 'An error occurred while verifying the APP key: ' . $e->getMessage(),
-                'status_code' => 500,
-            ];
-        }
+        return true;
     }
 
     public function createCompany(Request $request, $user){
