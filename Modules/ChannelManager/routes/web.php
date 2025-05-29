@@ -26,10 +26,7 @@ use Modules\ChannelManager\Livewire\BookingPayments\Lists as PaymentLists;
 */
 
 Route::middleware('identify-kover')->group(function () {
-    // Route::get('channelmanager', ChannelManagerController::class, 'index')->name('channels.index');
-    Route::get('channels/overview', Overview::class)->name('channels.index');
-    Route::get('channels', ChannelLists::class)->name('channels.lists');
-    Route::get('channels/{channel}', ChannelShow::class)->name('channels.show');
+
     Route::get('/guests', GuestLists::class)->name('guests.lists');
 
     // Bookings
@@ -51,8 +48,6 @@ Route::middleware('identify-kover')->group(function () {
         // Booking Payments
         Route::prefix('/booking-payments')->name('bookings.payments.')->group(function() {
             Route::get('/', PaymentLists::class)->name('lists');
-            // Route::get('/create', PaymentCreate::class)->name('create');
-            // Route::get('/{invoice}', PaymentShow::class)->name('show');
 
         });
 });

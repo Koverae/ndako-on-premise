@@ -6,7 +6,7 @@
                 <tr class="list-tr">
                     <th class="w-1">
 
-                    <input class="m-0 align-middle form-check-input" type="checkbox" wire:click="$toggle('selectAll')" aria-label="Select all invoices"></th>
+                    {{-- <input class="m-0 align-middle form-check-input" type="checkbox" wire:click="$toggle('selectAll')" aria-label="Select all invoices"></th> --}}
                     @foreach($this->columns() as $column)
                         <th wire:click="sort('{{ $column->key }}')" class="cursor-pointer fs-5">
                             {{ $column->label }}
