@@ -14,7 +14,7 @@ use Modules\Properties\Models\Property\PropertyUnitType;
 class Room extends Component
 {
 
-    public $period = 1  , $property;
+    public $period = 1, $property;
     public $bestSellerRoom, $bestSellerType, $rooms, $roomTypes;
     public $properties, $bestSellerRooms;
     public $startDate, $endDate;
