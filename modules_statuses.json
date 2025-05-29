@@ -4,6 +4,5 @@
     "Properties": true,
     "ChannelManager": true,
     "RevenueManager": true,
-    "FrontDesk": true,
     "Contact": true
 }

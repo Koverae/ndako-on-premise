@@ -55,8 +55,6 @@ class AppManagerHandler extends AppHandler
             new ChannelManagerAppHandler(),
             new RevenueManagerAppHandler(),
             new FiscalLocalizationHandler(),
-            // new FrontDeskAppHandler(),
-            // new DashboardsAppHandler(),
             // Add other module handlers as needed
         ];
 

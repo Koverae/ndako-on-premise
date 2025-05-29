@@ -273,14 +273,6 @@
     </div>
     @endif
 
-    @if(current_company()->team->subscription('main')->isOnTrial())
-    <div class="setting_block">
-        <div class="mt-2 alert alert-warning">
-            <p>⏳ Your trial will expire in <b>{{ getRemainingTrialDays() }}</b>! <a href="{{ route('subscribe') }}" class=""><strong>Upgrade now</strong></a> to continue managing your properties effortlessly with Ndako’s full suite of tools</p>
-        </div>
-    </div>
-    @endif
-
     <!-- Controls Panel -->
     @yield('control-panel')
     <!-- Controls Panel -->
