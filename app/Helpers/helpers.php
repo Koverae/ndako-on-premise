@@ -434,7 +434,7 @@ if(!function_exists('createRoomPreparationTask')){
             'priority' => 'medium',
             'related_id' => $reservation->id,
             'assigned_to' => 1, // Default to housekeeping team
-            'created_by' => auth()->id() ?? null,
+            'created_by' => Auth::user()->id ?? null,
         ]);
     }
 }
@@ -449,66 +449,6 @@ if(!function_exists('lease_term')){
         $leaseTerm = LeaseTerm::find($id);
 
         return $leaseTerm;
-    }
-}
-
-// if(!function_exists('lease_term')){
-//     function lease_term($lease_duration)
-//     {
-//         $lease_terms = [
-//             '1' => '1 month',
-//             '2' => '2 months',
-//             '3' => '3 months',
-//             '4' => '4 months',
-//             '5' => '5 months',
-//             '6' => '6 months',
-//             '7' => '7 months',
-//             '8' => '8 months',
-//             '9' => '9 months',
-//             '10' => '10 months',
-//             '11' => '11 months',
-//             '12' => '12 months',
-//         ];
-
-//         return $lease_terms[$lease_duration];
-//     }
-// }
-
-if(!function_exists('getRemainingTrialDays')){
-    function getRemainingTrialDays(){
-        $remainingTime = '';
-
-        $subscription = current_company()->team->subscription('main');
-        $daysLeft = $subscription->getTrialPeriodRemainingUsageIn('day');
-        $hoursLeft = $subscription->getTrialPeriodRemainingUsageIn('hour');
-
-        if($daysLeft >= 1){
-            $remainingTime = $daysLeft.' days';
-        }else{
-            $remainingTime = $hoursLeft.' hours';
-        }
-
-        return $remainingTime;
-
-    }
-}
-
-if(!function_exists('getRemainingSubDays')){
-    function getRemainingSubDays(){
-        $remainingTime = '';
-
-        $subscription = current_company()->team->subscription('main');
-        $daysLeft = $subscription->getSubscriptionPeriodRemainingUsageIn('day');
-        $hoursLeft = $subscription->getSubscriptionPeriodRemainingUsageIn('hour');
-
-        if($daysLeft >= 1){
-            $remainingTime = $daysLeft.' days';
-        }else{
-            $remainingTime = $hoursLeft.' hours';
-        }
-
-        return $remainingTime;
-
     }
 }
 
@@ -548,25 +488,6 @@ if (!function_exists('calculateEndDate')) {
     }
 }
 
-// if (!function_exists('calculateSubscriptionEndDate')) {
-//     function calculateSubscriptionEndDate($subscription): Carbon
-//     {
-//         return match ($subscription->invoice_interval) {
-//             'month' => Carbon::parse($subscription->starts_at) now()->addMonth(),
-//             'year'  => now()->addYear(),
-//             default   => now()->addDays(30), // Fallback to 30 days if undefined
-//         };
-//     }
-// }
-
-if(!function_exists('getPlan')){
-    function getPlan($tag = null){
-        $plan = Plan::getByTag($tag);
-        $planName = $plan->name.' '. ucfirst($plan->invoice_interval).'ly';
-
-        return $planName;
-    }
-}
 
 if(!function_exists('getProperty')){
     function getProperty($id){
