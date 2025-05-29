@@ -45,14 +45,4 @@ class CompanyPanel extends ControlPanel
         ];
     }
 
-    public function actionButtons() : array
-    {
-        return [
-            ActionButton::make('archive', '<i class="bi bi-inboxes"></i> '.__('Archive'), 'archiveUser()'),
-            ActionButton::make('duplicate', __('<i class="fa-regular fa-copy"></i> Duplicate'), 'duplicateUser()'),
-            ActionButton::make('delete', '<i class="bi bi-trash"></i> '.__('Delete'), 'deleteQT()'),
-            // Add more buttons as needed
-        ];
-    }
-
 }

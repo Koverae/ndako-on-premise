@@ -41,6 +41,7 @@ class ImportFile extends Component
             'mod_guests' => "Guests",
             'mod_expenses' => "Expenses",
             'mod_bookings' => "Bookings",
+            'mod_payments' => "Payments",
             // Add more here
             default => abort(404, 'Invalid model'),
         };
@@ -55,6 +56,7 @@ class ImportFile extends Component
             'mod_guests' => \Modules\ChannelManager\Models\Guest\Guest::class,
             'mod_expenses' => \Modules\RevenueManager\Models\Expenses\Expense::class,
             'mod_bookings' => \Modules\ChannelManager\Models\Booking\Booking::class,
+            'mod_payments' => \Modules\ChannelManager\Models\Booking\BookingPayment::class,
             // Add more here
             default => abort(404, 'Invalid model'),
         };
@@ -71,6 +73,7 @@ class ImportFile extends Component
             'mod_guests' => "guests.lists",
             'mod_expenses' => "expenses.lists",
             'mod_bookings' => "bookings.lists",
+            'mod_payments' => "bookings.payments.lists",
             // Add more here
             default => abort(404, 'Invalid model'),
         };
@@ -210,7 +213,7 @@ class ImportFile extends Component
 
     public function downloadTemplate()
     {
-        $filePath = storage_path("app/public/imports/{$this->modelSlug}.xlsx");
+        $filePath = public_path("files/imports/{$this->modelSlug}.xlsx");
 
         if (file_exists($filePath)) {
             return response()->download($filePath);
