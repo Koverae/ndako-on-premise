@@ -42,12 +42,10 @@ Route::middleware('identify-kover')->group(function () {
             Route::get('/', InvoiceLists::class)->name('lists');
             Route::get('/create', InvoiceCreate::class)->name('create');
             Route::get('/{invoice}', InvoiceShow::class)->name('show');
-
         });
 
         // Booking Payments
         Route::prefix('/booking-payments')->name('bookings.payments.')->group(function() {
             Route::get('/', PaymentLists::class)->name('lists');
-
         });
 });
