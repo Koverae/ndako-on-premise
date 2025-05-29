@@ -26,19 +26,6 @@ class EnsureTeamHasSubscription
             abort(403, 'No team found.');
         }
 
-        $trialEndsAt = $team->trial_ends_at;
-        $hasActiveSubscription = $team->subscription('main')->isActive();
-        $msg = "Your trial has expired. Please subscribe.";
-
-
-        if ($team->subscription('main')->ends_at && now()->greaterThan($team->subscription('main')->ends_at)) {
-            return response()->view('errors.sub-expired', [], 403);
-        }
-
-        if ($team->subscription('main')->hasEndedTrial() && !$team->subscription('main')->isActive()) {
-            return response()->view('errors.trial-expired', [], 403);
-        }
-
         return $next($request);
     }
 }

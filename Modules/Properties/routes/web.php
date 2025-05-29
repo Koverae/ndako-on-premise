@@ -36,7 +36,7 @@ Route::middleware('identify-kover')->group(function () {
     Route::get('properties', PropertyLists::class)->name('properties.lists');
 
     Route::prefix('/properties')->name('properties.')->group(function() {
-        Route::get('/create', PropertyCreate::class)->middleware(['limit:properties'])->name('create');
+        Route::get('/create', PropertyCreate::class)->name('create');
         Route::get('/{property}', PropertyShow::class)->name('show');
     });
 
@@ -51,7 +51,7 @@ Route::middleware('identify-kover')->group(function () {
     // Unit Types
     Route::prefix('/unit-types')->name('properties.unit-types.')->group(function() {
         Route::get('/', UnitTypeLists::class)->name('lists');
-        Route::get('/create', UnitTypeCreate::class)->middleware(['limit:units'])->name('create');
+        Route::get('/create', UnitTypeCreate::class)->name('create');
         Route::get('/{type}', UnitTypeShow::class)->name('show');
 
     });
@@ -59,7 +59,7 @@ Route::middleware('identify-kover')->group(function () {
     // Units
     Route::prefix('/units')->name('properties.units.')->group(function() {
         Route::get('/', UnitLists::class)->name('lists');
-        Route::get('/create', UnitCreate::class)->middleware(['limit:units'])->name('create');
+        Route::get('/create', UnitCreate::class)->name('create');
         Route::get('/{unit}', UnitShow::class)->name('show');
 
     });
