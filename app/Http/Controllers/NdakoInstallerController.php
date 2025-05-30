@@ -1464,17 +1464,7 @@ class NdakoInstallerController extends Controller
             File::put(storage_path('installed'), now());
 
             return redirect()->route('login')->with('success', 'Installation complete! You can now log in.');
-        // try {
 
-        // } catch (Exception $e) {
-        //     // Log the error for debugging
-        //     Log::error('Installation error: '.$e->getMessage());
-
-        //     // Redirect back with error message, keep old input except password
-        //     return redirect()->back()
-        //         ->withInput($request->except('admin_password'))
-        //         ->withErrors(['error' => 'Installation failed: '.$e->getMessage()]);
-        // }
     }
 
     protected function writeEnvFile(Request $request)
