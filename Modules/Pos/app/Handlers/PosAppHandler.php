@@ -1,0 +1,167 @@
+<?php
+namespace Modules\Pos\Handlers;
+
+use App\Models\Company\Company;
+use Modules\App\Handlers\AppHandler;
+use Modules\ChannelManager\Models\Channel\Channel;
+use Modules\Pos\Models\Floor\FloorPlan;
+use Modules\Pos\Models\Floor\Table;
+use Modules\Pos\Models\Pos\Pos;
+use Modules\Pos\Models\Pos\PosSetting;
+use Modules\Pos\Models\Product\Product;
+use Modules\Pos\Models\Product\ProductCategory;
+use Modules\RevenueManager\Models\Accounting\Journal;
+
+class PosAppHandler extends AppHandler{
+
+    protected function getModuleSlug()
+    {
+        return 'pos';
+    }
+
+    protected function handleInstallation($company)
+    {
+        // Example: Create settings-related data and initial configuration
+        $this->configure($company);
+    }
+
+    protected function handleUninstallation()
+    {
+        // Example: Drop blog-related tables and clean up configurations
+    }
+
+    protected function configure($companyId){
+
+        $company = Company::find($companyId);
+        $pos = Pos::create([
+            'company_id' => $company->id,
+            'name' => $company->name.' Restaurant',
+            // 'has_multiple_employee' => $company->multiple_employee,
+            'is_restaurant' => true,
+        ]);
+
+        PosSetting::create([
+            'company_id' => $pos->company_id,
+            'pos_id' => $pos->id,
+        ]);
+
+        // Set Payment Methods
+        $paymentMethods = Journal::whereNotIn('type', ['miscellaneous', 'sale', 'purchase', 'paystack'])->isCompany($companyId)->get();
+        $pos->setting->payment_methods = $paymentMethods->pluck('id')->toArray();
+        $pos->setting->save();
+
+
+        if(env('APP_DISTRIBUTION') === "demo"){
+
+            // Set Product Categories
+            $categories = [
+                'Main Dishes' => [
+                    ['Ugali Beef', 180, ['Regular', 'Large']],
+                    ['Ugali Sukuma', 100, ['Plain', 'with Onions']],
+                    ['Ugali Matumbo', 160, ['Spicy', 'Mild']],
+                    ['Beef Stew', 200, ['Boneless', 'With Bones']],
+                    ['Chicken Stew', 220, ['Wet Fry', 'Dry Fry']],
+                    ['Nyama Choma (Beef)', 250, ['250g', '500g', '1kg']],
+                    ['Kuku Choma', 300, ['Half', 'Full']],
+                    ['Fish Fry (Tilapia)', 350, ['Whole', 'Fillet']],
+                    ['Fish Stew', 280, ['With Coconut', 'Plain']],
+                    ['Pilau Beef', 180, ['Small', 'Regular', 'Large']],
+                    ['Pilau Chicken', 190, ['Small', 'Regular', 'Large']],
+                    ['Chapati Beef', 180, ['1 chapati', '2 chapatis']],
+                    ['Chapati Beans', 130, ['1 chapati', '2 chapatis']],
+                    ['Githeri', 120, ['With Avocado', 'Plain']],
+                    ['Mukimo Beef', 180, ['With Kachumbari']],
+                    ['Mukimo Ndengu', 160, ['With Cabbage', 'Plain']],
+                ],
+                'Side Dishes' => [
+                    ['Ugali', 30, ['Small', 'Regular', 'Large']],
+                    ['Chapati', 25, ['Plain', 'Egg Chapati']],
+                    ['Plain Rice', 40, ['White', 'Coconut']],
+                    ['French Fries', 100, ['Regular', 'Large']],
+                    ['Mashed Potatoes', 90, ['With Butter', 'Plain']],
+                    ['Vegetable Fried Rice', 130, ['Spicy', 'Mild']],
+                    ['Stir-Fried Vegetables', 80, ['Mixed Veg', 'Sukuma']],
+                    ['Kachumbari', 20, ['Regular', 'Extra']],
+                    ['Managu', 60, ['With Cream', 'Plain']],
+                    ['Sukuma Wiki', 40, ['With Tomato', 'Plain']],
+                    ['Beans', 50, ['With Onions', 'Plain']],
+                    ['Ndengu', 60, ['With Carrots', 'Plain']],
+                    ['Cabbage', 40, ['Steamed', 'Fried']],
+                ],
+                // ... Add other categories like 'Breakfast Items', 'Fast Food / Quick Bites', etc. using same pattern
+            ];
+
+            foreach ($categories as $categoryName => $products) {
+                $category = ProductCategory::create([
+                    'company_id' => $companyId,
+                    'name' => $categoryName,
+                    'pos_id' => $pos->id,
+                ]);
+
+                foreach ($products as [$name, $price, $variants]) {
+                    Product::create([
+                        'product_category_id' => $category->id,
+                        'pos_id' => $pos->id,
+                        'company_id' => $companyId,
+                        'product_name' => $name,
+                        'product_price' => $price,
+                        'product_type' => 'storable',
+                        'product_cost' => 0,
+                        'product_reference' => $name,
+                        'product_code' => '',
+                        // 'variants' => $variants, // Will be auto-cast to JSON
+                    ]);
+                }
+            }
+
+            // Set Floor Plans and Tables
+
+            $floorPlans = [
+                [
+                    'name' => 'Main Hall',
+                    'tables' => [
+                        ['table_name' => 'T1', 'seats' => 4, 'shape' => 'square', 'status' => 'available'],
+                        ['table_name' => 'T2', 'seats' => 6, 'shape' => 'rectangle', 'status' => 'occupied'],
+                        ['table_name' => 'T3', 'seats' => 2, 'shape' => 'circle', 'status' => 'reserved'],
+                    ]
+                ],
+                [
+                    'name' => 'Terrace',
+                    'tables' => [
+                        ['table_name' => 'T4', 'seats' => 4, 'shape' => 'circle', 'status' => 'available'],
+                        ['table_name' => 'T5', 'seats' => 3, 'shape' => 'hexagon', 'status' => 'out'],
+                    ]
+                ],
+                [
+                    'name' => 'Private Lounge',
+                    'tables' => [
+                        ['table_name' => 'VIP-1', 'seats' => 6, 'shape' => 'octagon', 'status' => 'available'],
+                        ['table_name' => 'VIP-2', 'seats' => 8, 'shape' => 'rectangle', 'status' => 'occupied'],
+                    ]
+                ]
+            ];
+
+            foreach ($floorPlans as $plan) {
+                $floorPlan = FloorPlan::create([
+                    'name' => $plan['name'],
+                    'company_id' => $companyId,
+                    'pos_id' => $pos->id,
+                ]);
+
+                foreach ($plan['tables'] as $table) {
+                    Table::create([
+                        'floor_plan_id' => $floorPlan->id,
+                        'table_name' => $table['table_name'],
+                        'seats' => $table['seats'],
+                        'shape' => $table['shape'],
+                        'status' => $table['status'],
+                        'company_id' => $companyId,
+                        'pos_id' => $pos->id,
+                    ]);
+                }
+            }
+
+        }
+    }
+
+}
